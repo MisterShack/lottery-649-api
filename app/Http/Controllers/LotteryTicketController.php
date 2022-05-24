@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\LotteryService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Http;
 
 class LotteryTicketController extends Controller
 {
@@ -22,16 +22,8 @@ class LotteryTicketController extends Controller
             ], 500);
         }
 
-        $response = Http::get('https://www.playnow.com/services2/lotto/draw/six49/' . $fields['draw_date'], ['verify' => base_path('cacert.pem')]);
+        $winningNumbers = LotteryService::getwinningNumbers($fields['draw_date']);
 
-        $drawNumbers = $response['drawNbrs'];
-        $bonusNumber = $response['bonusNbr'];
-        $extraNumbers = $response['extraNbrs'];
-
-
-
-
-
-        return response($response->json(), 200);
+        return response($winningNumbers, 200);
     }
 }

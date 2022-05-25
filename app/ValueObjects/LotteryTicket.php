@@ -12,17 +12,11 @@ class LotteryTicket
 
     private int $bonusNumber;
 
-    private array $extraNumbers;
-
-    public function __construct($date, $ticketNumbers, $bonusNumber, $extraNumbers = null)
+    public function __construct($date, $ticketNumbers, $bonusNumber)
     {
         $this->setDate($date);
         $this->setTicketNumbers($ticketNumbers);
         $this->setBonusNumber($bonusNumber);
-
-        if ($extraNumbers !== null) {
-            $this->setExtraNumbers($extraNumbers);
-        }
     }
 
     public function setDate(string $date): void
@@ -59,19 +53,5 @@ class LotteryTicket
     public function getBonusNumber(): int
     {
         return $this->bonusNumber;
-    }
-
-    public function setExtraNumbers(array|int $extraNumbers): void
-    {
-        if (is_int($extraNumbers)) {
-            $extraNumbers = str_split($extraNumbers);
-        }
-
-        $this->extraNumbers = $extraNumbers;
-    }
-
-    public function getExtraNumbers(): array
-    {
-        return $this->extraNumbers;
     }
 }

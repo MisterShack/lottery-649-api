@@ -13,8 +13,7 @@ class LotteryTicketController extends Controller
         $fields = $request->validate([
             'draw_date' => 'required|date_format:Y-m-d',
             'ticket_numbers' => 'required',
-            'ticket_bonus' => 'required|integer',
-            'ticket_extra' => 'integer|size:7'
+            'ticket_bonus' => 'required|integer'
         ]);
 
         if (!is_array($fields['ticket_numbers']) || count($fields['ticket_numbers']) !== 6) {

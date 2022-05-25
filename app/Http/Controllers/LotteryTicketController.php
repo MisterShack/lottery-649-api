@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Services\LotteryService;
+use App\ValueObjects\LotteryTicket;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use InvalidArgumentException;
 
 class LotteryTicketController extends Controller
 {
@@ -16,14 +18,19 @@ class LotteryTicketController extends Controller
             'ticket_bonus' => 'required|integer'
         ]);
 
-        if (!is_array($fields['ticket_numbers']) || count($fields['ticket_numbers']) !== 6) {
+        try {
+            $ticket = new LotteryTicket($fields['draw_date'], $fields['ticket_numbers'], $fields['ticket_bonus']);
+
+        } catch (InvalidArgumentException $e) {
             return response([
-                'message' => 'Invalid numbers parameter.'
+                'message' => "Invalid parameters"
             ], 500);
         }
 
-        $winningNumbers = LotteryService::getwinningNumbers($fields['draw_date']);
+        $lotteryTicketService = new LotteryService();
 
-        return response($winningNumbers, 200);
+        return response([
+            "winning_amount" => $lotteryTicketService->checkTicket($ticket)
+        ], 200);
     }
 }

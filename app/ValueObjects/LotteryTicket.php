@@ -6,20 +6,33 @@ use InvalidArgumentException;
 
 class LotteryTicket
 {
+    private string $date;
+
     private array $ticketNumbers;
 
     private int $bonusNumber;
 
     private array $extraNumbers;
 
-    public function __construct($ticketNumbers, $bonusNumber, $extraNumbers = null)
+    public function __construct($date, $ticketNumbers, $bonusNumber, $extraNumbers = null)
     {
+        $this->setDate($date);
         $this->setTicketNumbers($ticketNumbers);
         $this->setBonusNumber($bonusNumber);
 
         if ($extraNumbers !== null) {
             $this->setExtraNumbers($extraNumbers);
         }
+    }
+
+    public function setDate(string $date): void
+    {
+        $this->date = $date;
+    }
+
+    public function getDate(): string
+    {
+        return $this->date;
     }
 
     public function setTicketNumbers(array $ticketNumbers): void

@@ -12,11 +12,12 @@ class LotteryTicketController extends Controller
     {
         $fields = $request->validate([
             'draw_date' => 'required|date_format:Y-m-d',
-            'numbers' => 'required',
-            'extra' => 'integer|size:7'
+            'ticket_numbers' => 'required',
+            'ticket_bonus' => 'required|integer',
+            'ticket_extra' => 'integer|size:7'
         ]);
 
-        if (!is_array($fields['numbers']) || count($fields['numbers']) !== 7) {
+        if (!is_array($fields['ticket_numbers']) || count($fields['ticket_numbers']) !== 6) {
             return response([
                 'message' => 'Invalid numbers parameter.'
             ], 500);
